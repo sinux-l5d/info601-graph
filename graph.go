@@ -118,3 +118,14 @@ func (g *Graph) Print() {
 		fmt.Println()
 	}
 }
+
+// TODO
+func (g *Graph) NbQuartier() int {
+	compteur := 0
+	//trouver toutes les maisons, incrementer compteur
+	// prendre la première et regarder tous ces voisins,
+	//les enlever du premier tableau (la première aussi)
+	// pour cela utiliser n.CheminAccessible
+	// recommencer tant que le tableau n'est pas vide
+	return compteur
+}

@@ -93,6 +93,7 @@ func main() {
 
 	habitatJean := jean.Get("habite")[0].(*Instance)
 	habitatPaul := paul.Get("habite")[0].(*Instance)
+	habitatMacron := macron.Get("habite")[0].(*Instance)
 	chemin, existe := habitatJean.CheminProfondeurVers(habitatPaul, "voisin")
 
 	fmt.Printf("3) %s est-il voisin de %s ? %v\n", paul.GetName(), jean.GetName(), existe)
@@ -118,6 +119,12 @@ func main() {
 		}
 		fmt.Println()
 	}
+
+	cardinal := habitatJean.CardSousGraph("voisin")
+	fmt.Printf("5) %s a exactement  %d voisins dans son quartier \n", paul.GetName(), cardinal)
+
+	cardinal2 := habitatMacron.CardSousGraph("voisin")
+	fmt.Printf("6) %s a exactement  %d voisins dans son quartier \n", macron.GetName(), cardinal2)
 }
 
 func main2() {

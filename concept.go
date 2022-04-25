@@ -52,3 +52,7 @@ func (c *Concept) CheminAccessible(relation string) map[string]Origine {
 func (c *Concept) CheminOptiVers(node INode, relation string) ([]string, bool) {
 	return c.Node.CheminOptiVers(node, relation)
 }
+
+func (c *Concept) CardSousGraph(relation string) int {
+	return c.Node.CardSousGraph(relation)
+}

@@ -162,7 +162,6 @@ func (n *Node) CheminAccessible(relation string) map[string]Origine {
 
 func (n *Node) CheminOptiVers(node INode, relation string) ([]string, bool) {
 	distances := n.CheminAccessible(relation)
-
 	//print distances
 	result := []string{node.GetName()}
 
@@ -180,4 +179,12 @@ func (n *Node) CheminOptiVers(node INode, relation string) ([]string, bool) {
 	}
 
 	return result, true
+}
+
+func (n *Node) CardSousGraph(relation string) int {
+	// dans mon idée, je récupère le dictionnaire des distances
+	distances := n.CheminAccessible(relation)
+	// on renvoie la taille du dictionnaire
+	return len(distances) - 1
+
 }
