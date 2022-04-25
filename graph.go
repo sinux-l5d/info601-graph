@@ -25,14 +25,13 @@ func (g *Graph) AddNodes(nodes ...INode) {
 	g.nodes = append(g.nodes, nodes...)
 }
 
-func (g *Graph) FindName(name string) []INode {
-	var result []INode
+func (g *Graph) FindName(name string) (INode, bool) {
 	for _, node := range g.nodes {
 		if node.GetName() == name {
-			result = append(result, node)
+			return node, true
 		}
 	}
-	return result
+	return nil, false
 }
 
 func (g *Graph) ConceptOf(i *Instance) []Concept {
@@ -94,13 +93,12 @@ func (g *Graph) estVoisin(a, b *Instance) ([]INode, bool) {
 	habitationA := a.Get("habite")[0].(*Instance)
 	habitationB := b.Get("habite")[0].(*Instance)
 
-	fmt.Printf("%s habite %s\n", a.GetName(), habitationA.GetName())
-	fmt.Printf("%s habite %s\n", b.GetName(), habitationB.GetName())
+	// fmt.Printf("%s habite %s\n", a.GetName(), habitationA.GetName())
+	// fmt.Printf("%s habite %s\n", b.GetName(), habitationB.GetName())
 
 	chemin, existe := habitationA.CheminProfondeurVers(habitationB, "voisin")
 
 	if !existe {
-		fmt.Println("EXISTE PAS")
 		return nil, false
 	}
 
@@ -117,5 +115,6 @@ func (g *Graph) estVoisin(a, b *Instance) ([]INode, bool) {
 func (g *Graph) Print() {
 	for _, node := range g.nodes {
 		node.Print()
+		fmt.Println()
 	}
 }

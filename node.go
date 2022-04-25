@@ -63,11 +63,8 @@ func (n *Node) AUnCheminVers(node INode, relation string) bool {
 	visited := make(map[INode]bool)
 	visited[n] = true
 	for !pile.IsEmpty() {
-		pile.Print()
 		current := pile.Pop()
 		if current == node {
-			fmt.Println("FIN")
-			pile.Print()
 			return true
 		}
 		for _, node := range current.Get(relation) {
@@ -108,7 +105,6 @@ func (n *Node) CheminProfondeurVers(node INode, relation string) ([]INode, bool)
 	// var courant INode = n
 
 	for !pile.IsEmpty() {
-		pile.Print()
 		courant, existe := choisirProchain(pile.Top(), relation, visited)
 		// if existe {
 		// 	fmt.Println("courant : ", courant.GetName())

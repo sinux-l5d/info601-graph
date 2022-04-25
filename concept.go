@@ -11,6 +11,12 @@ func NewConcept(name string) *Concept {
 	}
 }
 
+func NewConceptOf(name string, concept *Concept) *Concept {
+	c := NewConcept(name)
+	c.AddRelationship("rdf:subClassOf", concept)
+	return c
+}
+
 func (c *Concept) GetName() string {
 	return c.Node.GetName()
 }
