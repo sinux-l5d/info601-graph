@@ -106,13 +106,13 @@ func (n *Node) CheminProfondeurVers(node INode, relation string) ([]INode, bool)
 
 	for !pile.IsEmpty() {
 		courant, existe := choisirProchain(pile.Top(), relation, visited)
-		// if existe {
-		// 	fmt.Println("courant : ", courant.GetName())
-		// } else {
-		// 	fmt.Println("Pas de prochain")
-		// }
+		//if existe {
+		//	fmt.Println("courant : ", courant.GetName())
+		//} else {
+		//	fmt.Println("Pas de prochain")
+		//}
 
-		if courant == node {
+		if courant != nil && courant.GetName() == node.GetName() {
 			pile.Push(courant)
 			return pile.AsArray(), true
 		}

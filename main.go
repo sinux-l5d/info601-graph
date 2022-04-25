@@ -49,7 +49,7 @@ func makeCity(g *Graph) {
 
 	// Paul
 	paul := NewInstanceOf("Paul", actif)
-	paul.AddRelationship("habite", mJaune)
+	paul.AddRelationship("habite", mBleu)
 	paul.AddRelationship("travail à", gymnase)
 	paul.AddRelationship("travail à", mairie)
 	paul.AddRelationship("travail à", ecole)
@@ -86,19 +86,37 @@ func main() {
 
 	_, sontVoisins := graph.estVoisin(paul, jean)
 
-	fmt.Printf("%s est-il voisin de %s ? %v\n", paul.GetName(), jean.GetName(), sontVoisins)
+	fmt.Printf("1) %s est-il voisin de %s ? %v\n", paul.GetName(), jean.GetName(), sontVoisins)
 
 	_, sontVoisins = graph.estVoisin(paul, macron)
-	fmt.Printf("%s est-il voisin de %s ? %v\n", paul.GetName(), macron.GetName(), sontVoisins)
+	fmt.Printf("2) %s est-il voisin de %s ? %v\n", paul.GetName(), macron.GetName(), sontVoisins)
 
 	habitatJean := jean.Get("habite")[0].(*Instance)
 	habitatPaul := paul.Get("habite")[0].(*Instance)
 	chemin, existe := habitatJean.CheminProfondeurVers(habitatPaul, "voisin")
 
-	fmt.Printf("%s est-il voisin de %s ? %v\n", habitatPaul.GetName(), habitatJean.GetName(), existe)
+	fmt.Printf("3) %s est-il voisin de %s ? %v\n", paul.GetName(), jean.GetName(), existe)
 
 	if existe {
-		fmt.Printf("Le chemin est : %s\n", chemin)
+		//fmt.Printf("Le chemin est : %s\n", chemin)
+		fmt.Print("Chemin : (parcours profondeur)")
+		for _, node := range chemin {
+			fmt.Printf("%s | ", node.GetName())
+		}
+		fmt.Println()
+	}
+
+	chemin2, existe2 := habitatJean.CheminOptiVers(habitatPaul, "voisin")
+
+	fmt.Printf("4) %s est-il voisin de %s ? %v\n", paul.GetName(), jean.GetName(), existe2)
+
+	if existe2 {
+		//fmt.Printf("Le chemin est : %s\n", chemin)
+		fmt.Print("Chemin optimisé (parcours largeur): ")
+		for _, node := range chemin2 {
+			fmt.Printf("%s | ", node)
+		}
+		fmt.Println()
 	}
 }
 
