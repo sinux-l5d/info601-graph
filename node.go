@@ -4,7 +4,9 @@ import "fmt"
 
 type INode interface {
 	AddRelationship(name string, node INode)
-	Find(name string) []INode
+	AddRelationshipBidirectional(name string, node INode)
+	CheminVers(node INode, relation string) ([]INode, bool)
+	Get(name string) []INode
 	GetName() string
 	Print()
 }
@@ -32,8 +34,13 @@ func (n *Node) AddRelationship(name string, node INode) {
 	n.relationships[name] = append(n.relationships[name], node)
 }
 
-// Find relationships by name
-func (n *Node) Find(name string) []INode {
+func (n *Node) AddRelationshipBidirectional(name string, node INode) {
+	n.AddRelationship(name, node)
+	node.AddRelationship(name, n)
+}
+
+// Get relationships by name
+func (n *Node) Get(name string) []INode {
 	return n.relationships[name]
 }
 
@@ -43,6 +50,25 @@ func (n *Node) Print() {
 	for relationName, nodes := range n.relationships {
 		for _, node := range nodes {
 			fmt.Println(" \u2514\u2500(", relationName, ")->[", node.GetName(), "]")
+		}
+	}
+}
+
+func (n *Node) CheminVers(node INode, relation string) ([]INode, bool) {
+	pile := NewPile()
+	pile.Push(n)
+	visited := make(map[INode]bool)
+	visited[n] = true
+	for !pile.IsEmpty() {
+		current := pile.Pop()
+		if current == node {
+			return pile.AsArray(), true
+		}
+		for _, node := range current.Get(relation) {
+			if !visited[node] {
+				pile.Push(node)
+				visited[node] = true
+			}
 		}
 	}
 }

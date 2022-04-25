@@ -1,19 +1,22 @@
 package main
 
+import (
+	"fmt"
+)
+
+func PromptAction()
+
 func main() {
 
-	human := NewConcept("Human")
+	graph := NewGraph()
 
-	woman := NewConcept("Woman")
+	m1 := NewInstance("m1")
+	m2 := NewInstance("m2")
+	m3 := NewInstance("m3")
+	m4 := NewInstance("m4")
+	m5 := NewInstance("m5")
+	m6 := NewInstance("m6")
 
-	woman.AddRelationship("is-a", human)
-
-	woman.Print()
-
-	juliette := NewNode("Juliette")
-
-	juliette.AddRelationship("is-a", woman)
-
-	juliette.Print()
+	m6.AddRelationshipBidirectional("voisin", m3)")
 
 }
