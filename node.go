@@ -2,17 +2,24 @@ package main
 
 import "fmt"
 
+type INode interface {
+	AddRelationship(name string, node INode)
+	Find(name string) []INode
+	GetName() string
+	Print()
+}
+
 // a node in the sense of a knowledge graph. Shouldn't be used directly.
 type Node struct {
 	name          string
-	relationships map[string][]*Node
+	relationships map[string][]INode
 }
 
 // Constructor of node
 func NewNode(name string) *Node {
 	return &Node{
 		name:          name,
-		relationships: make(map[string][]*Node),
+		relationships: make(map[string][]INode),
 	}
 }
 
@@ -21,12 +28,12 @@ func (n *Node) GetName() string {
 }
 
 // Add a relationship to the node
-func (n *Node) AddRelationship(name string, node *Node) {
+func (n *Node) AddRelationship(name string, node INode) {
 	n.relationships[name] = append(n.relationships[name], node)
 }
 
 // Find relationships by name
-func (n *Node) Find(name string) []*Node {
+func (n *Node) Find(name string) []INode {
 	return n.relationships[name]
 }
 

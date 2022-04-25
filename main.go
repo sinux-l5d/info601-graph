@@ -2,10 +2,18 @@ package main
 
 func main() {
 
-	node := NewNode("Paul")
+	human := NewConcept("Human")
 
-	node.AddRelationship("is-a", NewNode("Humain"))
+	woman := NewConcept("Woman")
 
-	node.Print()
+	woman.AddRelationship("is-a", human)
+
+	woman.Print()
+
+	juliette := NewNode("Juliette")
+
+	juliette.AddRelationship("is-a", woman)
+
+	juliette.Print()
 
 }
