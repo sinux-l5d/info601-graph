@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func ConvertConceptToString(vs []Concept, f func(Concept) string) []string {
 	vsm := make([]string, len(vs))
 	for i, v := range vs {
@@ -38,10 +40,22 @@ func (p *Pile) Pop() (top INode) {
 	return
 }
 
+func (p *Pile) Len() int {
+	return len(p.pile)
+}
+
 func (p *Pile) IsEmpty() bool {
 	return len(p.pile) == 0
 }
 
 func (p *Pile) AsArray() []INode {
 	return p.pile
+}
+
+func (p *Pile) Print() {
+	fmt.Println("==========================")
+	for _, n := range p.pile {
+		fmt.Print(n.GetName() + " \n")
+	}
+	fmt.Println("==========================")
 }

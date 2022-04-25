@@ -21,6 +21,10 @@ func (g *Graph) AddNode(node INode) {
 	g.nodes = append(g.nodes, node)
 }
 
+func (g *Graph) AddNodes(nodes ...INode) {
+	g.nodes = append(g.nodes, nodes...)
+}
+
 func (g *Graph) FindName(name string) []INode {
 	var result []INode
 	for _, node := range g.nodes {
@@ -86,18 +90,27 @@ func (g *Graph) StringConceptOf(i *Instance) string {
 	return fmt.Sprint(strings.Join(conceptsS, "->") + "\n")
 }
 
-func (g *Graph) estVoisin(a, b *Instance) ([]*Instance, bool) {
+func (g *Graph) estVoisin(a, b *Instance) ([]INode, bool) {
 	habitationA := a.Get("habite")[0].(*Instance)
 	habitationB := b.Get("habite")[0].(*Instance)
 
-	chemin, existe := habitationA.CheminVers(habitationB, "habite")
+	fmt.Printf("%s habite %s\n", a.GetName(), habitationA.GetName())
+	fmt.Printf("%s habite %s\n", b.GetName(), habitationB.GetName())
 
-	var result []*Instance
-	for _, node := range chemin {
-		result = append(result, node.(*Instance))
+	chemin, existe := habitationA.CheminProfondeurVers(habitationB, "voisin")
+
+	if !existe {
+		fmt.Println("EXISTE PAS")
+		return nil, false
 	}
 
-	return result, existe
+	// // conversion
+	// var result []*Instance
+	// for _, node := range chemin {
+	// 	result = append(result, node.(*Instance))
+	// }
+
+	return chemin, true
 }
 
 // print graph

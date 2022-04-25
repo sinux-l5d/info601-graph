@@ -31,6 +31,18 @@ func (c *Concept) Print() {
 	c.Node.Print()
 }
 
-func (c *Concept) CheminVers(node INode, relation string) ([]INode, bool) {
-	return c.Node.CheminVers(node, relation)
+func (c *Concept) AUnCheminVers(node INode, relation string) bool {
+	return c.Node.AUnCheminVers(node, relation)
+}
+
+func (c *Concept) CheminProfondeurVers(node INode, relation string) ([]INode, bool) {
+	return c.Node.CheminProfondeurVers(node, relation)
+}
+
+func (c *Concept) CheminAccessible(relation string) map[string]Origine {
+	return c.Node.CheminAccessible(relation)
+}
+
+func (c *Concept) CheminOptiVers(node INode, relation string) ([]string, bool) {
+	return c.Node.CheminOptiVers(node, relation)
 }
