@@ -119,13 +119,31 @@ func (g *Graph) Print() {
 	}
 }
 
-// TODO
+// Fonction qui compte le nombre de quartiers
 func (g *Graph) NbQuartier() int {
-	compteur := 0
-	//trouver toutes les maisons, incrementer compteur
-	// prendre la première et regarder tous ces voisins,
-	//les enlever du premier tableau (la première aussi)
-	// pour cela utiliser n.CheminAccessible
-	// recommencer tant que le tableau n'est pas vide
-	return compteur
+	//compteur := 0
+	//trouver toutes les instances du concept batiment
+	var instances []Instance
+	var conceptBatiment INode
+	var conceptTrouve bool
+	var res []string
+	var instanceEtVoisins []string
+	conceptBatiment, conceptTrouve = g.FindName("batiment")
+	if conceptTrouve {
+		instances = g.InstanceOf(conceptBatiment.(*Concept))
+	}
+	//pour chaque instance de batiment
+	for _, instance := range instances {
+		//on prend tous ses voisins
+		voisins := instance.CheminAccessible("voisin")
+		// on ajoute l'instance et ses voisins à un tableau
+		if !EstDans(instance.GetName(), instanceEtVoisins) {
+			res = append(res, instance.GetName())
+		}
+		instanceEtVoisins = append(instanceEtVoisins, instance.GetName())
+		for voisin := range voisins {
+			instanceEtVoisins = append(instanceEtVoisins, voisin)
+		}
+	}
+	return len(res)
 }

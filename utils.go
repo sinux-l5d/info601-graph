@@ -18,6 +18,15 @@ func ConvertInstanceToString(vs []Instance, f func(Instance) string) []string {
 	return vsm
 }
 
+func EstDans(chaine string, t []string) bool {
+	for _, v := range t {
+		if chaine == v {
+			return true
+		}
+	}
+	return false
+}
+
 type Pile struct {
 	pile []INode
 }

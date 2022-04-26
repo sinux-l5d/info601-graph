@@ -134,7 +134,8 @@ func main() {
 	for _, bat := range lesbatiments {
 		fmt.Println(bat.GetName())
 	}
-	// afficher le nombre de quartiers
+	nbQuartier := graph.NbQuartier()
+	fmt.Printf("8) Il y a exactement %d quartiers dans la ville\n", nbQuartier)
 }
 
 func main2() {
