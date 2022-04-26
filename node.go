@@ -18,6 +18,7 @@ type INode interface {
 type Node struct {
 	name          string
 	relationships map[string][]INode
+	attribute     map[string][]Attribute
 }
 
 // Constructor of node
@@ -25,6 +26,7 @@ func NewNode(name string) *Node {
 	return &Node{
 		name:          name,
 		relationships: make(map[string][]INode),
+		attribute:     make(map[string][]Attribute),
 	}
 }
 
@@ -187,4 +189,20 @@ func (n *Node) CardSousGraph(relation string) int {
 	// on renvoie la taille du dictionnaire
 	return len(distances) - 1
 
+}
+
+func (i *Node) Attributes() map[string][]Attribute {
+	return i.attribute
+}
+
+func (i *Node) AttributesOf(name string) []Attribute {
+	return i.attribute[name]
+}
+
+func (i *Node) AddAttribute(name string, value string) {
+	i.attribute[name] = append(i.attribute[name], Attribute(value))
+}
+
+func (c *Node) GetAttribute(name string) []Attribute {
+	return c.attribute[name]
 }

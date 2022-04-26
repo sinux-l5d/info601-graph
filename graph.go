@@ -147,3 +147,35 @@ func (g *Graph) NbQuartier() int {
 	}
 	return len(res)
 }
+
+// Fonction qui retourne les instances en fonction de leur attribut
+func (g *Graph) GetInstancesPersonne(attribut string, relation string) []Instance {
+	var instances []Instance
+	var conceptPersonne INode
+	var conceptTrouve bool
+	conceptPersonne, conceptTrouve = g.FindName("Personne")
+	if conceptTrouve {
+		instances = g.InstanceOf(conceptPersonne.(*Concept))
+	}
+	var res []Instance
+	for _, instance := range instances {
+		if len(instance.GetAttribute(relation)) > 0 {
+			if instance.GetAttribute(relation)[0].GetValue() == attribut {
+				res = append(res, instance)
+			}
+		} else {
+			// On récupère les concepts de l'instance
+			concepts := g.ConceptOf(&instance)
+			// On recherche l'attribut dans les concepts
+			for _, concept := range concepts {
+				if len(concept.GetAttribute(relation)) > 0 {
+					if concept.GetAttribute(relation)[0].GetValue() == attribut {
+						res = append(res, instance)
+						break
+					}
+				}
+			}
+		}
+	}
+	return res
+}

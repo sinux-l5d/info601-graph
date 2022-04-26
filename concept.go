@@ -56,3 +56,7 @@ func (c *Concept) CheminOptiVers(node INode, relation string) ([]string, bool) {
 func (c *Concept) CardSousGraph(relation string) int {
 	return c.Node.CardSousGraph(relation)
 }
+
+func (c *Concept) GetAttributes(name string) []Attribute {
+	return c.Node.GetAttribute(name)
+}

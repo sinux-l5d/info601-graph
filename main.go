@@ -4,6 +4,7 @@ import "fmt"
 
 func makeCity(g *Graph) {
 	batiment := NewConcept("batiment")
+	batiment.AddAttribute("village", "Chambéry")
 
 	// Concept batiment public
 	batimentPublic := NewConceptOf("Bâtiment public", batiment)
@@ -32,6 +33,7 @@ func makeCity(g *Graph) {
 	martinez := NewInstanceOf("Martinez", hotel)
 	princes := NewInstanceOf("Hôtel des Princes", hotel)
 	versaille := NewInstanceOf("Versaille", chateau)
+	versaille.AddAttribute("village", "Versaille")
 
 	mJaune.AddRelationshipBidirectional("voisin", mRouge)
 	mRose.AddRelationshipBidirectional("voisin", mJaune)
@@ -43,6 +45,7 @@ func makeCity(g *Graph) {
 
 	// Concepts personnes
 	personne := NewConcept("Personne")
+	personne.AddAttribute("village", "Chambéry")
 	retraite := NewConceptOf("Retraité", personne)
 	enfant := NewConceptOf("Enfant", personne)
 	actif := NewConceptOf("Actif", personne)
@@ -67,6 +70,7 @@ func makeCity(g *Graph) {
 	macron.AddRelationship("habite", versaille)
 	macron.AddRelationship("travail à", mairie)
 	macron.AddAttribute("metier", "Président")
+	macron.AddAttribute("village", "Versaille")
 
 	g.AddNodes(batiment, batimentPublic, batimentPrive, maison, appartement, chateau, hotel, salleFetes, mairie, gymnase, ecole, mRouge, mJaune, mBleu, mVerte, mRose, martinez, princes, versaille, personne, retraite, enfant, actif, paul, jean, macron)
 }
@@ -136,6 +140,26 @@ func main() {
 	}
 	nbQuartier := graph.NbQuartier()
 	fmt.Printf("8) Il y a exactement %d quartiers dans la ville\n", nbQuartier)
+
+	presidents := graph.GetInstancesPersonne("Président", "metier")
+	fmt.Print("9) Liste des présidents : ")
+	for _, president := range presidents {
+		fmt.Println(president.GetName())
+	}
+
+	// 10) Liste des personnes qui ont 30 ans
+	personnes30 := graph.GetInstancesPersonne("30", "age")
+	fmt.Print("10) Liste des personnes qui ont 30 ans : ")
+	for _, personne := range personnes30 {
+		fmt.Println(personne.GetName())
+	}
+
+	// 11) Affiche tous les gens qui habitent à Chambéry
+	village := graph.GetInstancesPersonne("Chambéry", "village")
+	fmt.Print("11) Liste des personnes qui habitent à Chambéry : ")
+	for _, personne := range village {
+		fmt.Println(personne.GetName())
+	}
 }
 
 func main2() {

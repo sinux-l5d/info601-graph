@@ -1,15 +1,15 @@
 package main
 
+import "fmt"
+
 // A Instance is a node in the sense of a knowledge graph.
 type Instance struct {
 	Node
-	attribute map[string][]Attribute
 }
 
 func NewInstance(name string) *Instance {
 	return &Instance{
-		Node:      *NewNode(name),
-		attribute: make(map[string][]Attribute),
+		Node: *NewNode(name),
 	}
 }
 
@@ -17,18 +17,6 @@ func NewInstanceOf(name string, concept *Concept) *Instance {
 	i := NewInstance(name)
 	i.AddRelationship("rdf:type", concept)
 	return i
-}
-
-func (i *Instance) Attributes() map[string][]Attribute {
-	return i.attribute
-}
-
-func (i *Instance) AttributesOf(name string) []Attribute {
-	return i.attribute[name]
-}
-
-func (i *Instance) AddAttribute(name string, value string) {
-	i.attribute[name] = append(i.attribute[name], Attribute(value))
 }
 
 func (c *Instance) GetName() string {
@@ -49,10 +37,10 @@ func (c *Instance) Get(name string) []INode {
 
 func (c *Instance) Print() {
 	c.Node.Print()
-	// fmt.Println("Attributes:")
-	// for k, v := range c.attribute {
-	// 	fmt.Println("\t", k, ":", v)
-	// }
+	fmt.Println("Attributes:")
+	for k, v := range c.Node.attribute {
+		fmt.Println("\t", k, ":", v)
+	}
 }
 
 func (c *Instance) AUnCheminVers(node INode, relation string) bool {
