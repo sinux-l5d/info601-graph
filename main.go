@@ -76,7 +76,8 @@ func main() {
 	makeCity(graph)
 
 	graph.Print()
-
+	batimentI, _ := graph.FindName("batiment")
+	batiment := batimentI.(*Concept)
 	paulI, _ := graph.FindName("Paul")
 	paul := paulI.(*Instance)
 	jeanI, _ := graph.FindName("Jean")
@@ -85,6 +86,8 @@ func main() {
 	macron := macronI.(*Instance)
 
 	_, sontVoisins := graph.estVoisin(paul, jean)
+
+	fmt.Printf("0) %s est une instance de : %s \n", paul.GetName(), graph.StringConceptOf(paul))
 
 	fmt.Printf("1) %s est-il voisin de %s ? %v\n", paul.GetName(), jean.GetName(), sontVoisins)
 
@@ -121,10 +124,17 @@ func main() {
 	}
 
 	cardinal := habitatJean.CardSousGraph("voisin")
-	fmt.Printf("5) %s a exactement  %d voisins dans son quartier \n", paul.GetName(), cardinal)
+	fmt.Printf("5) %s a exactement  %d voisin(s) dans son quartier \n", paul.GetName(), cardinal)
 
 	cardinal2 := habitatMacron.CardSousGraph("voisin")
-	fmt.Printf("6) %s a exactement  %d voisins dans son quartier \n", macron.GetName(), cardinal2)
+	fmt.Printf("6) %s a exactement  %d voisin(s) dans son quartier \n", macron.GetName(), cardinal2)
+
+	lesbatiments := graph.InstanceOf(batiment)
+	fmt.Print("7) Liste des batiments : ")
+	for _, bat := range lesbatiments {
+		fmt.Println(bat.GetName())
+	}
+	// afficher le nombre de quartiers
 }
 
 func main2() {
