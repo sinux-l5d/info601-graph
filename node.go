@@ -12,6 +12,10 @@ type INode interface {
 	Get(name string) []INode
 	GetName() string
 	Print()
+	Attributes() map[string][]Attribute
+	AttributesOf(name string) []Attribute
+	AddAttribute(name string, value string)
+	GetAttribute(name string) []Attribute
 }
 
 // a node in the sense of a knowledge graph. Shouldn't be used directly.
